@@ -1,0 +1,7 @@
+Controller settings for ROV
+yMove	moves forward / reverse 	3	SLIDER	Y Axis	0	1.0	0.0
+xMove	turn moment / trust difference control 	3	SLIDER	X Axis	0	1.0	0.0
+camControl	move camera 	3	SLIDER	Y Rotation	0	1.0	0.0
+down	close bellow	1	BUTTON	Button 4	0	0.0	0.0
+up	open bellow	1	BUTTON	Button 5	0	0.0	0.0
+light	toggle light 	1	BUTTON	Button 0	0	0.0	0.0
