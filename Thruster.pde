@@ -1,4 +1,4 @@
-import java.time.Duration; //<>// //<>// //<>// //<>// //<>//
+import java.time.Duration;  //<>//
 import java.time.Instant;
 
 public class Thruster {
@@ -11,11 +11,12 @@ public class Thruster {
   Instant start;
   Instant end; 
   Duration timeElapsed;
-
+//Constructor initialize the values for the variables in this class 
   private  Thruster() {
     x = 0;
     y = 0;
   }
+  //
   private boolean timeDirSwitch() {
 
     if (thrustDir == thrustDirPastActive) {
@@ -58,7 +59,7 @@ public class Thruster {
 
   public int thusterControl() {
 
-    float posBaseXY = x/3 + y ;
+    float posBaseXY = x/2 + y ;
     int sevrvo;
 
 
@@ -71,12 +72,12 @@ public class Thruster {
     if (timeDirSwitch()) {
 
       if (posBaseXY < 0) {
-        sevrvo = (int) map(posBaseXY, 0, -1, 0, 180);
+        sevrvo = (int) map(posBaseXY, 0, -1, 40, 50);
       } else {
-        sevrvo = (int) map(posBaseXY, 0, 1, 0, 180);
+        sevrvo = (int) map(posBaseXY, 0, 1, 40, 50);
       }
     } else {
-      sevrvo = 0;
+      sevrvo = 40;
     }
     return sevrvo;
   }

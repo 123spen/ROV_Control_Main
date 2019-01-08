@@ -5,40 +5,45 @@ import org.gamecontrolplus.gui.*;
 import cc.arduino.*;
 import org.firmata.*;
 
-
+//Initialize the arduino & controller as objects using the library above
 ControlDevice controller;
 ControlIO control;
 Arduino arduino;
 
-
+//Initialize ROV parts as objects
 Thruster lThruster = new Thruster();
 Thruster rThruster = new Thruster();
 Light lightObj = new Light(); 
 CamControl camCont = new CamControl();
 BellowControl bellows = new BellowControl();
 
+//Set up controller to work with the Arduino using the fermata communication 
+//protocol and also initializes servo pulsus for the respective Servo Motors.
 void setup() {
-  size(360, 200);
+
+  size(200, 150);
   control = ControlIO.getInstance(this);
   controller = control.getMatchedDevice("ROVController");
-
+  // If no controller is found
   if (controller == null) {
     println("NO controller found");
     System.exit(-1);
   }
   arduino = new Arduino(this, Arduino.list()[0], 57600);
+
+  //Initializes servo Motors
   arduino.pinMode(3, Arduino.SERVO);
   arduino.pinMode(10, Arduino.SERVO);
   arduino.pinMode(11, Arduino.SERVO);
 }
-
+//Obtain user inputs from controller and return values to objects which use these user inputs.
 public void getUserInput() {
-  
+
   float yMove = controller.getSlider("yMove").getValue();
   float xMove = controller.getSlider("xMove").getValue();
 
-  lThruster.getXY(xMove, yMove, false, false);
-  rThruster.getXY(xMove, yMove, true, false);
+  lThruster.getXY(xMove, yMove, false, true);
+  rThruster.getXY(xMove, yMove, true, true);
 
   camCont.getYRight(controller.getSlider("camControl").getValue());
   bellows.getUpDown( controller.getButton("up").pressed(), controller.getButton("down").pressed());
@@ -48,16 +53,16 @@ public void getUserInput() {
 
 
 void draw() {
-
-  arduino.servoWrite(10, lThruster.thusterControl());
-  arduino.servoWrite(11, rThruster.thusterControl());
-  arduino.servoWrite(3, camCont.Control());
+  // Note: Allows servo pulses to be 1ms initially to avoid recalibration. 
+  // That's why they are put in before the get input function getUserInput().
+  arduino.servoWrite(10, lThruster.thusterControl()); //Send left thruster servo signal to ESC based on the left thruster object
+  arduino.servoWrite(11, rThruster.thusterControl());  //Send right thruster servo signal to ESC based on the right thruster object
+  arduino.servoWrite(3, camCont.Control()); // Send servo pulse for camera control to servo motor
   getUserInput();
 
-  arduino.digitalWrite(9, lThruster.sendThrustDIR());
-  arduino.digitalWrite(12, rThruster.sendThrustDIR());
-  arduino.digitalWrite(7, lightObj.sendOnOffState());
-  arduino.analogWrite(5, bellows.controlPWM());
-  arduino.digitalWrite(4, bellows.controlDIR());
-  
+  arduino.digitalWrite(9, lThruster.sendThrustDIR()); //Control thruster direction (left)
+  arduino.digitalWrite(12, rThruster.sendThrustDIR()); //Control thruster direction (right)
+  arduino.digitalWrite(7, lightObj.sendOnOffState()); //Control the light of the ROV
+  arduino.analogWrite(5, bellows.controlPWM());  //Send PWM signal or no signal two stepper motor drivers to drive or stop driving the bellow motion respectively.
+  arduino.digitalWrite(4, bellows.controlDIR()); //Controlling the bellows to be open or closed by stepper motor action
 }

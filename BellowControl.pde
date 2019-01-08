@@ -1,10 +1,11 @@
+//This class is used to controls the bellows
 public class BellowControl {
 
-  private boolean down;
-  private boolean up;
-  private int stepperDIR;
+  private boolean down; //holds down input
+  private boolean up;   //holds up input
+  private int stepperDIR; //holds the pin value for the stepper driver DIR input pin
 
-
+  //Constructor initialize the values for the variables in this class 
   private void BellowControl() {
 
     up = false;
@@ -12,11 +13,13 @@ public class BellowControl {
     stepperDIR = 0;
   }
 
+  //get up & down values for class
   public void getUpDown(boolean up, boolean down) {
     this.up = up;
     this.down = down;
   }
 
+  //control if bellows are in opening or closing states
   public int controlDIR() {
 
     if (down == true && up == false) {
@@ -27,7 +30,7 @@ public class BellowControl {
     return stepperDIR;
   }
 
-
+  //Send PWM signal if one bumper is pressed to stepper driver
   public int controlPWM() {
 
     int pulsePWMVal; 
