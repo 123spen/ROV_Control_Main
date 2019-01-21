@@ -11,8 +11,8 @@ public class CamControl {
   public void getYRight(float yRight) {
     this.yRight = yRight;
   }
-  //return new value from angle 90 +/- 30 deg
+  //return new value from REAL angle 90 +/- 30 deg
   public int Control() {
-    return (int)map(yRight, -1, 1, 60, 120);
+    return (int)map(yRight, -1, 1, 80, 140);
   }
 }

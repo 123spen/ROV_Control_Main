@@ -1,3 +1,4 @@
+
 import processing.serial.*;
 import net.java.games.input.*;
 import org.gamecontrolplus.*;
@@ -32,7 +33,7 @@ void setup() {
   arduino = new Arduino(this, Arduino.list()[0], 57600);
 
   //Initializes servo Motors
-  arduino.pinMode(3, Arduino.SERVO);
+  arduino.pinMode(5, Arduino.SERVO);
   arduino.pinMode(10, Arduino.SERVO);
   arduino.pinMode(11, Arduino.SERVO);
 }
@@ -57,12 +58,12 @@ void draw() {
   // That's why they are put in before the get input function getUserInput().
   arduino.servoWrite(10, lThruster.thusterControl()); //Send left thruster servo signal to ESC based on the left thruster object
   arduino.servoWrite(11, rThruster.thusterControl());  //Send right thruster servo signal to ESC based on the right thruster object
-  arduino.servoWrite(3, camCont.Control()); // Send servo pulse for camera control to servo motor
+  arduino.servoWrite(5, camCont.Control()); // Send servo pulse for camera control to servo motor
   getUserInput();
 
   arduino.digitalWrite(9, lThruster.sendThrustDIR()); //Control thruster direction (left)
   arduino.digitalWrite(12, rThruster.sendThrustDIR()); //Control thruster direction (right)
   arduino.digitalWrite(7, lightObj.sendOnOffState()); //Control the light of the ROV
-  arduino.analogWrite(5, bellows.controlPWM());  //Send PWM signal or no signal two stepper motor drivers to drive or stop driving the bellow motion respectively.
+  arduino.analogWrite(3, bellows.controlPWM());  //Send PWM signal or no signal two stepper motor drivers to drive or stop driving the bellow motion respectively.
   arduino.digitalWrite(4, bellows.controlDIR()); //Controlling the bellows to be open or closed by stepper motor action
 }
