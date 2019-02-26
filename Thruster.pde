@@ -98,8 +98,7 @@ if(idleTime(posBase) == true){
 
     float posBaseXY = 3*x/5 + y ;
     int sevrvo;
-
-
+    
     if (posBaseXY < 0) {
       thrustDir = Arduino.HIGH;
     } else {

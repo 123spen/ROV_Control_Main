@@ -16,7 +16,7 @@ Thruster lThruster = new Thruster();
 Thruster rThruster = new Thruster();
 Light lightObj = new Light(); 
 CamControl camCont = new CamControl();
-BellowControl bellows = new BellowControl();
+TopThruster TThruster = new TopThruster();
 
 //Set up controller to work with the Arduino using the fermata communication 
 //protocol and also initializes servo pulsus for the respective Servo Motors.
@@ -47,7 +47,7 @@ public void getUserInput() {
   rThruster.getXY(xMove, yMove, true, true);
 
   camCont.getYRight(controller.getSlider("camControl").getValue());
-  bellows.getUpDown( controller.getButton("up").pressed(), controller.getButton("down").pressed());
+  TThruster.getUpDown( controller.getButton("up").pressed(), controller.getButton("down").pressed());
   lightObj.getAButten(controller.getButton("light").pressed());
 }
 
@@ -64,6 +64,6 @@ void draw() {
   arduino.digitalWrite(9, lThruster.sendThrustDIR()); //Control thruster direction (left)
   arduino.digitalWrite(12, rThruster.sendThrustDIR()); //Control thruster direction (right)
   arduino.digitalWrite(7, lightObj.sendOnOffState()); //Control the light of the ROV
-  arduino.analogWrite(3, bellows.controlPWM());  //Send PWM signal or no signal two stepper motor drivers to drive or stop driving the bellow motion respectively.
-  arduino.digitalWrite(4, bellows.controlDIR()); //Controlling the bellows to be open or closed by stepper motor action
+  arduino.servoWrite(3, TThruster.thurstUpDown());  
+  arduino.digitalWrite(4, TThruster.controlDIR()); 
 }
