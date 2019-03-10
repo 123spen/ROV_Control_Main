@@ -11,6 +11,7 @@ public class TopThruster {
   private int upDownDIR;
   private int lateState;
   private int sevrvo; 
+  private boolean change;
   
   Instant startTop;
   Instant endTop; 
@@ -23,6 +24,7 @@ public class TopThruster {
     upDownDIR = 0;
     lateState = 0;
     sevrvo = 45;
+    change = false;
     
     startTop = Instant.now();
     endTop = Instant.now();
@@ -39,27 +41,30 @@ public class TopThruster {
   
   private boolean checkChangeState(){
    
+    
     endTop = Instant.now();
-     timeElapsedTop = Duration.between(startTop, endTop);
+    timeElapsedTop = Duration.between(startTop, endTop);
   
     
     if(upDownDIR == lateState ){
      startTop = Instant.now();
       
-     return true; 
+     change = true; 
     }
     else if(timeElapsedTop.toMillis() > 200){
      lateState = upDownDIR;
-     return false;
+     change = false;
     }
     else{
       
-      return false;
+      change = false;
     }
+    
+   return change;
   }
   
    public int controlDIR() {
-
+    
     
     if (down == true && up == false) {
       upDownDIR = Arduino.HIGH;
@@ -72,7 +77,7 @@ public class TopThruster {
   public int thurstUpDown() {
    
   if (down == true ^ up == true) {
-      sevrvo = 50;
+      sevrvo = 55;
     
     } else {
       sevrvo = 45;

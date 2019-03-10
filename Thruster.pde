@@ -96,7 +96,7 @@ if(idleTime(posBase) == true){
 
   public int thusterControl() {
 
-    float posBaseXY = 3*x/5 + y ;
+    float posBaseXY =  y ;
     int sevrvo;
     
     if (posBaseXY < 0) {
@@ -113,6 +113,9 @@ if(idleTime(posBase) == true){
         sevrvo = (int) map(posBaseXY, 0, 1, 45, 55);
       }
     } else {
+      sevrvo = 45;
+    }
+    if(sevrvo < 50){
       sevrvo = 45;
     }
     return sevrvo;
