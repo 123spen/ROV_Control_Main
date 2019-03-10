@@ -33,7 +33,8 @@ void setup() {
   arduino = new Arduino(this, Arduino.list()[0], 57600);
 
   //Initializes servo Motors
-  arduino.pinMode(5, Arduino.SERVO);
+  arduino.pinMode(3, Arduino.SERVO);
+  arduino.pinMode(9, Arduino.SERVO);
   arduino.pinMode(10, Arduino.SERVO);
   arduino.pinMode(11, Arduino.SERVO);
 }
@@ -56,14 +57,15 @@ public void getUserInput() {
 void draw() {
   // Note: Allows servo pulses to be 1ms initially to avoid recalibration. 
   // That's why they are put in before the get input function getUserInput().
-  arduino.servoWrite(10, lThruster.thusterControl()); //Send left thruster servo signal to ESC based on the left thruster object
+  arduino.servoWrite(9, lThruster.thusterControl()); //Send left thruster servo signal to ESC based on the left thruster object
   arduino.servoWrite(11, rThruster.thusterControl());  //Send right thruster servo signal to ESC based on the right thruster object
-  arduino.servoWrite(5, camCont.Control()); // Send servo pulse for camera control to servo motor
+  arduino.servoWrite(3, camCont.Control()); // Send servo pulse for camera control to servo motor
+   arduino.servoWrite(10, TThruster.thurstUpDown()); 
   getUserInput();
 
-  arduino.digitalWrite(9, lThruster.sendThrustDIR()); //Control thruster direction (left)
+  arduino.digitalWrite(7, lThruster.sendThrustDIR()); //Control thruster direction (left)
   arduino.digitalWrite(12, rThruster.sendThrustDIR()); //Control thruster direction (right)
-  arduino.digitalWrite(7, lightObj.sendOnOffState()); //Control the light of the ROV
-  arduino.servoWrite(3, TThruster.thurstUpDown());  
-  arduino.digitalWrite(4, TThruster.controlDIR()); 
+  arduino.digitalWrite(2, lightObj.sendOnOffState()); //Control the light of the ROV
+  
+  arduino.digitalWrite(8, TThruster.controlDIR()); 
 }
