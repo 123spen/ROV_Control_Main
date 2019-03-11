@@ -115,8 +115,10 @@ if(idleTime(posBase) == true){
     } else {
       sevrvo = 45;
     }
-    if(sevrvo < 53){
+    if(sevrvo < 50){
       sevrvo = 45;
+    }else{
+      sevrvo = 55;
     }
     return sevrvo;
   }
