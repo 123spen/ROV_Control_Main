@@ -57,15 +57,18 @@ public void getUserInput() {
 void draw() {
   // Note: Allows servo pulses to be 1ms initially to avoid recalibration. 
   // That's why they are put in before the get input function getUserInput().
+  arduino.digitalWrite(2, lightObj.sendOnOffState()); //Control the light of the ROV
+  arduino.digitalWrite(7, lThruster.sendThrustDIR()); //Control thruster direction (left)
+  arduino.digitalWrite(12, rThruster.sendThrustDIR()); //Control thruster direction (right)
+  delay(300);
   arduino.servoWrite(9, lThruster.thusterControl()); //Send left thruster servo signal to ESC based on the left thruster object
   arduino.servoWrite(11, rThruster.thusterControl());  //Send right thruster servo signal to ESC based on the right thruster object
   arduino.servoWrite(3, camCont.Control()); // Send servo pulse for camera control to servo motor
    arduino.servoWrite(10, TThruster.thurstUpDown()); 
   getUserInput();
 
-  arduino.digitalWrite(7, lThruster.sendThrustDIR()); //Control thruster direction (left)
-  arduino.digitalWrite(12, rThruster.sendThrustDIR()); //Control thruster direction (right)
-  arduino.digitalWrite(2, lightObj.sendOnOffState()); //Control the light of the ROV
+  
+  
   
   arduino.digitalWrite(8, TThruster.controlDIR()); 
 }

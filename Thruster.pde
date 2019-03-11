@@ -44,7 +44,7 @@ if(idleTime(posBase) == true){
       end = Instant.now();
       timeElapsed = Duration.between(start, end);
 
-      if (timeElapsed.toMillis() > 200) {
+      if (timeElapsed.toMillis() > 500) {
         DirTansState = false;
         thrustDirPastActive = thrustDir;
         return true;
@@ -69,7 +69,7 @@ if(idleTime(posBase) == true){
         endIdle = Instant.now();
         timeElapsedIdle = Duration.between(startIdle, endIdle);
          
-        if (timeElapsedIdle.toMillis() > 200) {
+        if (timeElapsedIdle.toMillis() > 500) {
           return true;
         } else {
           return false;
@@ -115,11 +115,7 @@ if(idleTime(posBase) == true){
     } else {
       sevrvo = 45;
     }
-    if(sevrvo < 50){
-      sevrvo = 45;
-    }else{
-      sevrvo = 55;
-    }
+   
     return sevrvo;
   }
   public int sendThrustDIR() {
