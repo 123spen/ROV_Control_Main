@@ -13,6 +13,6 @@ public class CamControl {
   }
   //return new value from REAL angle 90 +/- 30 deg
   public int Control() {
-    return (int)map(yRight, -1, 1, 45, 135);
+    return (int)map(yRight, -1, 1, 75, 135);
   }
 }

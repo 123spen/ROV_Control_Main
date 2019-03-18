@@ -108,9 +108,9 @@ if(idleTime(posBase) == true){
     if (timeDirSwitch(posBaseXY)) {
 
       if (posBaseXY < 0) {
-        sevrvo = (int) map(posBaseXY, 0, -1, 45, 55);
+        sevrvo = (int) map(posBaseXY, 0, -1, 45, 60);
       } else {
-        sevrvo = (int) map(posBaseXY, 0, 1, 45, 55);
+        sevrvo = (int) map(posBaseXY, 0, 1, 45, 60);
       }
     } else {
       sevrvo = 45;

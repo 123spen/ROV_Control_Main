@@ -45,7 +45,7 @@ public void getUserInput() {
   float xMove = controller.getSlider("xMove").getValue();
 
   lThruster.getXY(xMove, yMove, false, true);
-  rThruster.getXY(xMove, yMove, true, true);
+  rThruster.getXY(xMove, yMove, false,false);
 
   camCont.getYRight(controller.getSlider("camControl").getValue());
   TThruster.getUpDown( controller.getButton("up").pressed(), controller.getButton("down").pressed());
